@@ -60,6 +60,7 @@ func (e *TeleportCheck) ExecuteLoginPostHook(_ http.ResponseWriter, r *http.Requ
 		locationPrevious := s.Devices[len(s.Devices)-2].Location
 		locationCurrent := s.Devices[len(s.Devices)-1].Location
 
+		// Fail open: if the location is absent/unknown, it is ok.
 		geoPositionPrevious, ok := locationToGeoPosition[*locationPrevious]
 		if !ok {
 			return nil
@@ -76,7 +77,11 @@ func (e *TeleportCheck) ExecuteLoginPostHook(_ http.ResponseWriter, r *http.Requ
 		timeCurrent := s.Devices[len(s.Devices)-1].CreatedAt
 		duration := timeCurrent.Sub(timePrevious).Seconds()
 
-		// TODO: Avoid divide by zero.
+		// Avoid divide by zero later.
+		if duration == 0 {
+			duration = math.SmallestNonzeroFloat64
+		}
+
 		speedMeterPerSecond := distance / duration
 
 		// TODO: Move to configuration.

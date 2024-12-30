@@ -48,6 +48,24 @@ func TestHookTeleportCheckLessThanTwoDevices(t *testing.T) {
 	}))
 }
 
+func TestHookTeleportCheckAbsentOrUnknownLocation(t *testing.T) {
+	require.NoError(t, teleportCheckWithDevices([]session.Device{}))
+	now := time.Now()
+	require.NoError(t, teleportCheckWithDevices([]session.Device{
+		{Location: str("Munich, Germany"), CreatedAt: now},
+		{Location: str("foobar"), CreatedAt: now},
+	}))
+}
+
+func TestHookTeleportCheckZeroDuration(t *testing.T) {
+	require.NoError(t, teleportCheckWithDevices([]session.Device{}))
+	now := time.Now()
+	require.Error(t, teleportCheckWithDevices([]session.Device{
+		{Location: str("Munich, Germany"), CreatedAt: now},
+		{Location: str("Paris, France"), CreatedAt: now},
+	}))
+}
+
 func TestHookTeleportCheckDistanceOk(t *testing.T) {
 	now := time.Now()
 	require.NoError(t, teleportCheckWithDevices([]session.Device{
