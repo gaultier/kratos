@@ -20,6 +20,7 @@ const (
 	ErrNoActiveSession               = "session_inactive"
 	ErrIDRedirectURLNotAllowed       = "self_service_flow_return_to_forbidden"
 	ErrIDInitiatedBySomeoneElse      = "security_identity_mismatch"
+	ErrIDLocationTeleport            = "session_location_teleport"
 
 	ErrIDCSRF = "security_csrf_violation"
 )

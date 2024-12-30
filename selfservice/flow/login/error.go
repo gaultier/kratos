@@ -36,6 +36,8 @@ var (
 
 	// ErrSessionRequiredForHigherAAL is returned when someone requests AAL2 or AAL3 even though no active session exists yet.
 	ErrSessionRequiredForHigherAAL = herodot.ErrUnauthorized.WithID(text.ErrIDSessionRequiredForHigherAAL).WithError("aal2 and aal3 can only be requested if a session exists already").WithReason("You can not requested a higher AAL (AAL2/AAL3) without an active session.")
+
+	ErrTeleported = herodot.ErrUnauthorized.WithID(text.ErrIDLocationTeleport).WithError("there were two login attempts in short succession from locations distant from one another").WithReason("there were two login attempts in short succession from locations distant from one another")
 )
 
 type (

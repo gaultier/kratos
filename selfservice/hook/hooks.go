@@ -11,4 +11,5 @@ const (
 	KeyVerificationUI      = "show_verification_ui"
 	KeyTwoStepRegistration = "two_step_registration"
 	KeyVerifier            = "verification"
+	KeyTeleportCheck       = "teleport_check"
 )
