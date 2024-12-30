@@ -15,6 +15,13 @@ func (m *RegistryDefault) HookVerifier() *hook.Verifier {
 	return m.hookVerifier
 }
 
+func (m *RegistryDefault) HookTeleportCheck() *hook.TeleportCheck {
+	if m.hookTeleportCheck == nil {
+		m.hookTeleportCheck = hook.NewTeleportCheck()
+	}
+	return m.hookTeleportCheck
+}
+
 func (m *RegistryDefault) HookCodeAddressVerifier() *hook.CodeAddressVerifier {
 	if m.hookCodeAddressVerifier == nil {
 		m.hookCodeAddressVerifier = hook.NewCodeAddressVerifier(m)
@@ -80,6 +87,8 @@ func (m *RegistryDefault) getHooks(credentialsType string, configs []config.Self
 			i = append(i, m.HookTwoStepRegistration())
 		case hook.KeyVerifier:
 			i = append(i, m.HookVerifier())
+		case hook.KeyTeleportCheck:
+			i = append(i, m.HookTeleportCheck())
 		default:
 			var found bool
 			for name, m := range m.injectedSelfserviceHooks {
