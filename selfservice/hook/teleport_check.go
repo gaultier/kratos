@@ -43,6 +43,9 @@ func DegPos(lat, lon float64) GeoPosition {
 	return GeoPosition{lat * math.Pi / 180, lon * math.Pi / 180}
 }
 
+// References:
+// - https://en.wikipedia.org/wiki/Haversine_formula
+// - https://rosettacode.org/wiki/Haversine_formula
 func HaversineDistanceMeters(p1, p2 GeoPosition) float64 {
 	rEarthMeters := 6372_800.0
 
